@@ -173,7 +173,7 @@ export function Popover({
         visibility: position ? 'visible' : 'hidden',
       }}
       className={cn(
-        'z-popover overflow-y-auto rounded-lg bg-surface-raised shadow-popover animate-scale-in origin-top',
+        'z-popover overflow-y-auto rounded-2xl bg-surface-raised shadow-popover animate-scale-in origin-top',
         !bare && 'p-1',
         className,
       )}

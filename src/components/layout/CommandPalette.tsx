@@ -222,21 +222,21 @@ export function CommandPalette() {
         aria-modal="true"
         aria-label="Command menu"
         tabIndex={-1}
-        className="relative flex w-full max-w-[600px] animate-scale-in flex-col overflow-hidden rounded-xl bg-surface-raised shadow-modal outline-none"
+        className="relative flex w-full max-w-[620px] animate-scale-in flex-col overflow-hidden rounded-3xl bg-surface-raised shadow-modal outline-none"
       >
-        <div className="flex items-center gap-2.5 border-b border-line px-3.5">
+        <div className="flex items-center gap-3 border-b border-line px-5">
           <Search size={16} className="shrink-0 text-fg-subtle" />
           <input
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search tasks, projects, clients, machines…"
-            className="h-12 flex-1 bg-transparent text-md text-fg placeholder:text-fg-faint focus:outline-none"
+            className="h-14 flex-1 bg-transparent text-md text-fg placeholder:text-fg-faint focus:outline-none"
           />
           <Kbd>ESC</Kbd>
         </div>
 
-        <div ref={listRef} className="max-h-[52vh] overflow-y-auto p-1.5">
+        <div ref={listRef} className="max-h-[52vh] overflow-y-auto p-2.5">
           {commands.length === 0 && (
             <div className="px-3 py-10 text-center">
               <Text variant="bodyMd" tone="subtle">
@@ -264,8 +264,8 @@ export function CommandPalette() {
                   onMouseMove={() => setCursor(i)}
                   onClick={cmd.run}
                   className={cn(
-                    'flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-left transition-colors',
-                    active ? 'bg-surface-selected' : 'hover:bg-surface-hover',
+                    'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors',
+                    active ? 'bg-accent-soft' : 'hover:bg-surface-hover',
                   )}
                 >
                   <Icon size={15} className="shrink-0 text-fg-subtle" />
@@ -278,7 +278,7 @@ export function CommandPalette() {
           })}
         </div>
 
-        <div className="flex items-center gap-3 border-t border-line bg-surface-sunken px-3 py-2">
+        <div className="flex items-center gap-3 border-t border-line bg-surface-sunken px-5 py-2.5">
           <span className="flex items-center gap-1">
             <Kbd>↑</Kbd>
             <Kbd>↓</Kbd>

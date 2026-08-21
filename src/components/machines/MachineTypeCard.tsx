@@ -13,7 +13,7 @@ import type { MachineTypeUtilization } from '@/lib/selectors'
 const unitDot: Record<'running' | 'idle' | 'maintenance', string> = {
   running: 'bg-accent',
   idle: 'bg-line-strong',
-  maintenance: 'bg-warning',
+  maintenance: 'bg-ink',
 }
 
 /**
@@ -33,11 +33,11 @@ export function MachineTypeCard({ stats, queueCount }: { stats: MachineTypeUtili
   return (
     <Link
       to={routes.machineType(mt.id)}
-      className="group flex flex-col rounded-lg bg-surface p-4 shadow-card transition-colors hover:bg-surface-hover"
+      className="group flex flex-col rounded-2xl bg-surface p-5 shadow-card transition-shadow duration-200 hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-start gap-2.5">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-surface-sunken text-fg-muted ring-1 ring-inset ring-line-subtle">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-accent-fg">
             <Factory size={15} />
           </span>
           <div className="min-w-0">

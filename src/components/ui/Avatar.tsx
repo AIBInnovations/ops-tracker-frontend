@@ -1,12 +1,12 @@
 import { cn } from '@/lib/cn'
 
 const PALETTE = [
-  'bg-[#5852d8] text-white',
-  'bg-[#0f9d76] text-white',
-  'bg-[#d9822b] text-white',
-  'bg-[#c2385c] text-white',
-  'bg-[#2f7fd1] text-white',
-  'bg-[#7a49c9] text-white',
+  'bg-[#6d4fe8] text-white',
+  'bg-[#f4918f] text-white',
+  'bg-[#3d2f8f] text-white',
+  'bg-[#1ab282] text-white',
+  'bg-[#9b7bf0] text-white',
+  'bg-[#e9a030] text-white',
 ]
 
 /** Stable colour per identity, so the same entity always reads the same. */
@@ -24,10 +24,10 @@ function initialsFor(name: string): string {
 }
 
 const sizeClass = {
-  xs: 'h-5 w-5 text-2xs',
-  sm: 'h-6 w-6 text-2xs',
-  md: 'h-7 w-7 text-xs',
-  lg: 'h-9 w-9 text-sm',
+  xs: 'h-6 w-6 text-2xs',
+  sm: 'h-7 w-7 text-2xs',
+  md: 'h-9 w-9 text-xs',
+  lg: 'h-10 w-10 text-sm',
 } as const
 
 export function Avatar({
@@ -46,7 +46,7 @@ export function Avatar({
       title={name}
       className={cn(
         'inline-flex shrink-0 select-none items-center justify-center font-semibold tracking-tight',
-        square ? 'rounded-sm' : 'rounded-full',
+        square ? 'rounded-xl' : 'rounded-full',
         sizeClass[size],
         hueFor(name),
         className,

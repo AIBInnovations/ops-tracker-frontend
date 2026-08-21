@@ -114,7 +114,7 @@ export function MachineDetailPage() {
         </Banner>
       )}
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-5 lg:grid-cols-5">
         <Metric label="Queued tasks" value={queue.length} helper={`${upcoming.length} still upcoming`} />
         <Metric label="Queued hours" value={formatHours(financials.hours)} />
         <Metric
@@ -135,7 +135,7 @@ export function MachineDetailPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Card>
           <CardHeader title="Running now" />
           {current ? (

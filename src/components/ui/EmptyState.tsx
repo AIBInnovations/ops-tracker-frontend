@@ -21,11 +21,11 @@ export function EmptyState({ icon, title, description, action, size = 'md', clas
       )}
     >
       {icon && (
-        <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-xl bg-surface-sunken text-fg-faint ring-1 ring-inset ring-line-subtle">
+        <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-soft text-accent-fg">
           {icon}
         </div>
       )}
-      <Text variant="headingSm">{title}</Text>
+      <Text variant="headingMd">{title}</Text>
       {description && (
         <div className="max-w-[36ch]">
           <Text variant="bodyMd" tone="subtle">

@@ -111,7 +111,7 @@ export function TaskDetailPage() {
         </>
       }
     >
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.6fr_1fr]">
         <BlockStack gap={4}>
           <Card>
             <CardHeader title="Work order" />

@@ -60,7 +60,7 @@ export function Modal({
         aria-modal="true"
         tabIndex={-1}
         className={cn(
-          'relative my-[6vh] flex w-full flex-col rounded-xl bg-surface shadow-modal outline-none animate-scale-in',
+          'relative my-[6vh] flex w-full flex-col rounded-3xl bg-surface shadow-modal outline-none animate-scale-in',
           widthClass[size],
           className,
         )}
@@ -82,7 +82,7 @@ export function Modal({
         <div className={cn('max-h-[62vh] min-h-0 flex-1 overflow-y-auto', padded && 'px-5 py-4')}>{children}</div>
 
         {footer && (
-          <footer className="flex shrink-0 items-center justify-end gap-2 rounded-b-xl border-t border-line bg-surface-sunken px-5 py-3.5">
+          <footer className="flex shrink-0 items-center justify-end gap-2 rounded-b-3xl border-t border-line-subtle bg-surface-sunken px-6 py-4">
             {footer}
           </footer>
         )}
@@ -140,7 +140,7 @@ export function ConfirmModal({
       <div className="flex gap-3">
         <span
           className={cn(
-            'flex h-8 w-8 shrink-0 items-center justify-center rounded-md',
+            'flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl',
             tone === 'danger' ? 'bg-danger-soft text-danger-fg' : 'bg-accent-soft text-accent-fg',
           )}
         >

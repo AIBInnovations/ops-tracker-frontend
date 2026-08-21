@@ -104,8 +104,8 @@ export function MachinesPage() {
             className="mt-1"
             segments={[
               { value: u.runningNow, tone: 'accent', label: 'Running' },
-              { value: u.idleNow, tone: 'neutral', label: 'Idle' },
-              { value: u.maintenanceNow, tone: 'warning', label: 'Maintenance' },
+              { value: u.idleNow, tone: 'accentSoft', label: 'Idle' },
+              { value: u.maintenanceNow, tone: 'neutral', label: 'Maintenance' },
             ]}
           />
         </div>
@@ -182,7 +182,7 @@ export function MachinesPage() {
         </>
       }
     >
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <StatGroup
           label="Machine floor"
           total={totals.machines}
@@ -197,7 +197,7 @@ export function MachinesPage() {
           segments={[
             { label: 'Running', value: totals.running, tone: 'accent', to: routes.timeline() },
             { label: 'Idle', value: totals.idle, tone: 'neutral', to: routes.tasks({ status: 'scheduled' }) },
-            { label: 'Maintenance', value: totals.maintenance, tone: 'warning' },
+            { label: 'Maintenance', value: totals.maintenance, tone: 'ink' },
           ]}
           footnote={`${machineTypes.length} machine types · ${formatCurrency(cheapestRate)}–${formatCurrency(dearestRate)}/hr`}
         />
@@ -213,7 +213,7 @@ export function MachinesPage() {
       </div>
 
       {view === 'grid' ? (
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           {utilization.map((u) => (
             <MachineTypeCard
               key={u.machineType.id}

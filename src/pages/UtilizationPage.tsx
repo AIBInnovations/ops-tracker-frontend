@@ -62,9 +62,14 @@ export function UtilizationPage() {
   const best = [...utilization].sort((a, b) => b.profit - a.profit)[0]
 
   const barColor = (v: number) =>
-    ({ danger: chart.danger, warning: chart.warning, accent: chart.accent, success: chart.success, neutral: chart.tick })[
-      utilizationTone(v)
-    ]
+    ({
+      danger: chart.pink,
+      warning: chart.accentSoft,
+      accent: chart.accent,
+      accentSoft: chart.accentSoft,
+      success: chart.accent,
+      neutral: chart.tick,
+    })[utilizationTone(v)]
 
   const chartData = utilization.map((u) => ({
     name: shortName(u.machineType.name),
@@ -162,7 +167,7 @@ export function UtilizationPage() {
       subtitle="Where capacity is going, and whether it is going to the right revenue."
       maxWidth="wide"
     >
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <StatGroup
           label="Machine floor"
           total={totals.machines}
@@ -176,8 +181,8 @@ export function UtilizationPage() {
           }
           segments={[
             { label: 'Running', value: totals.running, tone: 'accent', to: routes.machines() },
-            { label: 'Idle', value: totals.idle, tone: 'neutral', to: routes.machines() },
-            { label: 'Maintenance', value: totals.maintenance, tone: 'warning', to: routes.machines() },
+            { label: 'Idle', value: totals.idle, tone: 'accentSoft', to: routes.machines() },
+            { label: 'Maintenance', value: totals.maintenance, tone: 'neutral', to: routes.machines() },
           ]}
           footnote={`${formatHours(totals.hours)} of work queued across every type.`}
         />
@@ -196,7 +201,7 @@ export function UtilizationPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_1fr]">
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_1fr]">
         <Card>
           <CardHeader
             title={metric === 'utilization' ? 'Utilization by machine type' : 'Profit by machine type'}
@@ -229,9 +234,9 @@ export function UtilizationPage() {
                   axisLine={{ stroke: chart.axis }}
                   tickLine={false}
                   interval={0}
-                  angle={isWide ? -14 : 0}
+                  angle={isWide ? -30 : 0}
                   textAnchor="end"
-                  height={isWide ? 52 : 8}
+                  height={isWide ? 78 : 8}
                 />
                 <YAxis
                   tick={{ fontSize: 11, fill: chart.tick }}
@@ -253,7 +258,7 @@ export function UtilizationPage() {
                       : [formatCurrency(Number(value)), 'Profit']
                   }
                 />
-                <Bar dataKey={metric} radius={[4, 4, 0, 0]} maxBarSize={44}>
+                <Bar isAnimationActive={false} dataKey={metric} radius={[6, 6, 0, 0]} maxBarSize={18}>
                   {chartData.map((d, i) => (
                     <Cell
                       key={i}
@@ -261,8 +266,8 @@ export function UtilizationPage() {
                         metric === 'utilization'
                           ? barColor(d.utilization)
                           : d.profit >= 0
-                            ? chart.success
-                            : chart.danger
+                            ? chart.accent
+                            : chart.pink
                       }
                     />
                   ))}
@@ -282,12 +287,12 @@ export function UtilizationPage() {
               <AreaChart data={trendData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="revenueFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={chart.accent} stopOpacity={0.3} />
+                    <stop offset="0%" stopColor={chart.accent} stopOpacity={0.35} />
                     <stop offset="100%" stopColor={chart.accent} stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="costFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={chart.warning} stopOpacity={0.22} />
-                    <stop offset="100%" stopColor={chart.warning} stopOpacity={0} />
+                    <stop offset="0%" stopColor={chart.pink} stopOpacity={0.28} />
+                    <stop offset="100%" stopColor={chart.pink} stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke={chart.grid} vertical={false} />
@@ -312,25 +317,26 @@ export function UtilizationPage() {
                   formatter={(value, name) => [formatCurrency(Number(value)), name === 'revenue' ? 'Revenue' : 'Cost']}
                 />
                 <Area
+                  isAnimationActive={false}
                   type="monotone"
                   dataKey="revenue"
                   stroke={chart.accent}
-                  strokeWidth={2}
+                  strokeWidth={2.5}
                   fill="url(#revenueFill)"
                 />
-                <Area type="monotone" dataKey="cost" stroke={chart.warning} strokeWidth={2} fill="url(#costFill)" />
+                <Area isAnimationActive={false} type="monotone" dataKey="cost" stroke={chart.pink} strokeWidth={2.5} fill="url(#costFill)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
           <div className="mt-2 flex items-center gap-4">
             <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full" style={{ background: chart.accent }} />
+              <span className="h-2.5 w-2.5 rounded-full" style={{ background: chart.accent }} />
               <Text variant="bodySm" tone="subtle">
                 Revenue
               </Text>
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full" style={{ background: chart.warning }} />
+              <span className="h-2.5 w-2.5 rounded-full" style={{ background: chart.pink }} />
               <Text variant="bodySm" tone="subtle">
                 Machine cost
               </Text>

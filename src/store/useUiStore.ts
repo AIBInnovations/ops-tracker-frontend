@@ -4,7 +4,6 @@ export type Theme = 'light' | 'dark'
 export type Density = 'compact' | 'comfortable'
 
 const THEME_KEY = 'ppc.theme'
-const SIDEBAR_KEY = 'ppc.sidebar'
 const DENSITY_KEY = 'ppc.density'
 
 function read<T extends string>(key: string, fallback: T): T {
@@ -19,24 +18,21 @@ export function applyTheme(theme: Theme) {
 
 interface UiState {
   theme: Theme
-  sidebarCollapsed: boolean
   density: Density
   commandOpen: boolean
 
   setTheme: (theme: Theme) => void
   toggleTheme: () => void
-  toggleSidebar: () => void
   setDensity: (density: Density) => void
   setCommandOpen: (open: boolean) => void
 }
 
 /**
  * Chrome-level preferences. Kept out of useAppStore so a schedule recompute
- * never re-renders on a sidebar toggle, and vice versa.
+ * never re-renders on a theme toggle, and vice versa.
  */
 export const useUiStore = create<UiState>((set, get) => ({
   theme: read<Theme>(THEME_KEY, 'light'),
-  sidebarCollapsed: read<string>(SIDEBAR_KEY, 'false') === 'true',
   density: read<Density>(DENSITY_KEY, 'comfortable'),
   commandOpen: false,
 
@@ -47,13 +43,6 @@ export const useUiStore = create<UiState>((set, get) => ({
   },
 
   toggleTheme: () => get().setTheme(get().theme === 'dark' ? 'light' : 'dark'),
-
-  toggleSidebar: () =>
-    set((s) => {
-      const next = !s.sidebarCollapsed
-      window.localStorage.setItem(SIDEBAR_KEY, String(next))
-      return { sidebarCollapsed: next }
-    }),
 
   setDensity: (density) => {
     window.localStorage.setItem(DENSITY_KEY, density)

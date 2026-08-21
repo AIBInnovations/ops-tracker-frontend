@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'subtle' | 'danger' | 'link'
+export type ButtonVariant = 'primary' | 'accent' | 'secondary' | 'ghost' | 'subtle' | 'danger' | 'link'
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 
 const variantClass: Record<ButtonVariant, string> = {
-  primary:
-    'bg-accent text-accent-on shadow-xs hover:bg-accent-hover active:bg-accent-active ' +
-    'disabled:bg-accent/40 disabled:shadow-none',
+  primary: 'bg-ink text-white hover:bg-ink-hover active:bg-ink disabled:bg-ink/40',
+  accent:
+    'bg-accent text-accent-on hover:bg-accent-hover active:bg-accent-active disabled:bg-accent/40',
   secondary:
-    'bg-surface text-fg shadow-ring shadow-xs hover:bg-surface-hover active:bg-surface-active ' +
+    'bg-surface text-fg ring-1 ring-inset ring-line hover:bg-surface-hover active:bg-surface-active ' +
     'disabled:text-fg-faint',
-  ghost: 'bg-transparent text-fg-muted hover:bg-surface-hover hover:text-fg active:bg-surface-active',
+  ghost: 'bg-transparent text-fg-muted hover:bg-surface-sunken hover:text-fg active:bg-surface-active',
   subtle: 'bg-surface-sunken text-fg hover:bg-surface-active active:bg-surface-active',
   danger:
     'bg-danger text-white shadow-xs hover:brightness-110 active:brightness-95 disabled:opacity-50',
@@ -21,17 +21,17 @@ const variantClass: Record<ButtonVariant, string> = {
 }
 
 const sizeClass: Record<ButtonSize, string> = {
-  xs: 'h-6 gap-1 rounded-sm px-1.5 text-xs',
-  sm: 'h-7 gap-1.5 rounded-md px-2.5 text-sm',
-  md: 'h-8 gap-1.5 rounded-md px-3 text-base',
-  lg: 'h-9 gap-2 rounded-md px-4 text-md',
+  xs: 'h-7 gap-1 rounded-full px-2.5 text-xs',
+  sm: 'h-8 gap-1.5 rounded-full px-3.5 text-sm',
+  md: 'h-10 gap-2 rounded-full px-4.5 text-base',
+  lg: 'h-11 gap-2 rounded-full px-6 text-md',
 }
 
 const iconOnlySize: Record<ButtonSize, string> = {
-  xs: 'h-6 w-6 p-0',
-  sm: 'h-7 w-7 p-0',
-  md: 'h-8 w-8 p-0',
-  lg: 'h-9 w-9 p-0',
+  xs: 'h-7 w-7 p-0',
+  sm: 'h-8 w-8 p-0',
+  md: 'h-10 w-10 p-0',
+  lg: 'h-11 w-11 p-0',
 }
 
 interface BaseProps {
@@ -53,8 +53,8 @@ function classesFor({
   iconOnly,
 }: BaseProps & { iconOnly?: boolean }) {
   return cn(
-    'relative inline-flex shrink-0 select-none items-center justify-center whitespace-nowrap font-medium',
-    'transition-[background-color,box-shadow,color,opacity] duration-100',
+    'relative inline-flex shrink-0 select-none items-center justify-center whitespace-nowrap font-semibold',
+    'transition-[background-color,box-shadow,color,opacity] duration-150',
     'disabled:pointer-events-none disabled:opacity-60',
     variantClass[variant],
     sizeClass[size],

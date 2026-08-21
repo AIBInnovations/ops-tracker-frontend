@@ -15,9 +15,9 @@ export function Card({ children, padding = true, flat = false, className }: Card
   return (
     <div
       className={cn(
-        'rounded-lg bg-surface',
+        'min-w-0 rounded-2xl bg-surface',
         flat ? 'ring-1 ring-line' : 'shadow-card',
-        padding && 'p-4',
+        padding && 'p-5',
         className,
       )}
     >
@@ -53,19 +53,19 @@ export function CardHeader({
         // Below `sm` the action drops under the title — a segmented control
         // beside a heading squeezes the heading into three wrapped lines.
         'flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4',
-        inset ? 'px-4 pb-3 pt-3.5' : 'pb-3',
+        inset ? 'px-5 pb-4 pt-5' : 'pb-4',
         divider && 'border-b border-line',
         className,
       )}
     >
-      <div className="flex min-w-0 items-start gap-2.5">
+      <div className="flex min-w-0 items-start gap-3">
         {icon && (
-          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-sm bg-surface-sunken text-fg-muted">
+          <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-fg">
             {icon}
           </span>
         )}
         <div className="min-w-0">
-          <Text as="h2" variant="headingSm">
+          <Text as="h2" variant="headingMd">
             {title}
           </Text>
           {subtitle && (
@@ -82,7 +82,7 @@ export function CardHeader({
 
 /** Horizontally divided region inside a Card. */
 export function CardSection({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('border-t border-line-subtle p-4 first:border-t-0', className)}>{children}</div>
+  return <div className={cn('border-t border-line-subtle p-5 first:border-t-0', className)}>{children}</div>
 }
 
 /** Muted strip pinned to the bottom of a card — totals, hints, secondary actions. */
@@ -90,7 +90,7 @@ export function CardFooter({ children, className }: { children: ReactNode; class
   return (
     <div
       className={cn(
-        'flex items-center justify-between gap-3 rounded-b-lg border-t border-line bg-surface-sunken px-4 py-2.5',
+        'flex items-center justify-between gap-3 rounded-b-2xl border-t border-line-subtle bg-surface-sunken px-5 py-3',
         className,
       )}
     >

@@ -46,17 +46,17 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
 
   return (
     <Drawer open={open} onClose={onClose} title="Aadiushmaa Engineers" subtitle="Production planning" side="right" size="sm">
-      <nav className="p-3">
+      <nav className="p-4">
         {SECTIONS.map((section, i) => (
-          <div key={section.heading ?? i} className={cn(i > 0 && 'mt-4')}>
+          <div key={section.heading ?? i} className={cn(i > 0 && 'mt-5')}>
             {section.heading && (
-              <div className="px-2 pb-1">
+              <div className="px-3 pb-1.5">
                 <Text variant="label" tone="faint">
                   {section.heading}
                 </Text>
               </div>
             )}
-            <div className="flex flex-col gap-0.5">
+            <div className="flex flex-col gap-1">
               {section.items.map(({ to, label, icon: Icon, ...rest }) => (
                 <NavLink
                   key={to}
@@ -64,15 +64,17 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                   end={'end' in rest ? rest.end : undefined}
                   className={({ isActive }) =>
                     cn(
-                      'flex h-9 items-center gap-2.5 rounded-md px-2 text-md font-medium transition-colors',
-                      isActive ? 'bg-surface-selected text-accent-fg' : 'text-fg-muted hover:bg-surface-hover',
+                      'flex h-11 items-center gap-3 rounded-xl px-3 text-md font-medium transition-colors',
+                      isActive
+                        ? 'bg-ink text-white'
+                        : 'text-fg-muted hover:bg-surface-sunken hover:text-fg',
                     )
                   }
                 >
                   <Icon size={16} className="shrink-0" />
                   <span className="flex-1 truncate">{label}</span>
                   {label === 'Alerts' && criticalCount > 0 && (
-                    <span className="rounded-xs bg-danger-soft px-1 text-2xs font-semibold tabular-nums text-danger-fg">
+                    <span className="rounded-full bg-accent px-2 py-0.5 text-2xs font-bold tabular-nums text-white">
                       {criticalCount}
                     </span>
                   )}

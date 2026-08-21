@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Sidebar } from './Sidebar'
+import { IconRail } from './IconRail'
 import { Topbar } from './Topbar'
 import { CommandPalette } from './CommandPalette'
 import { MobileNav } from './MobileNav'
@@ -19,11 +19,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   useEffect(() => applyTheme(theme), [theme])
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-app">
-      <Sidebar />
-      <div className="flex min-w-0 flex-1 flex-col">
-        <Topbar onOpenMobileNav={() => setNavOpenedAt(pathname)} />
-        <main className="flex min-h-0 flex-1 flex-col">{children}</main>
+    // Header spans the full width; the icon rail and the content sit beneath it.
+    // `w-full` rather than `w-screen` — `100vw` includes the scrollbar gutter.
+    <div className="flex h-screen w-full flex-col overflow-hidden bg-app">
+      <Topbar onOpenMobileNav={() => setNavOpenedAt(pathname)} />
+      <div className="flex min-h-0 flex-1">
+        <IconRail />
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col">{children}</main>
       </div>
       <MobileNav open={mobileNavOpen} onClose={() => setNavOpenedAt(null)} />
       <CommandPalette />

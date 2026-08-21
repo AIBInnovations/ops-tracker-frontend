@@ -28,18 +28,18 @@ export type TextTone =
   | 'inverted'
 
 const variantClass: Record<TextVariant, string> = {
-  display: 'text-4xl font-bold',
-  pageTitle: 'text-2xl font-bold',
-  headingLg: 'text-xl font-semibold',
-  headingMd: 'text-md font-semibold',
-  headingSm: 'text-base font-semibold',
+  display: 'font-display text-4xl font-bold',
+  pageTitle: 'font-display text-3xl font-bold',
+  headingLg: 'font-display text-xl font-semibold',
+  headingMd: 'font-display text-md font-semibold',
+  headingSm: 'font-display text-base font-semibold',
   bodyLg: 'text-md font-normal',
   bodyMd: 'text-base font-normal',
   bodySm: 'text-sm font-normal',
-  metricLg: 'text-3xl font-bold tabular-nums',
-  metric: 'text-2xl font-bold tabular-nums',
-  metricSm: 'text-lg font-semibold tabular-nums',
-  label: 'text-2xs font-semibold uppercase tracking-[0.06em]',
+  metricLg: 'font-display text-3xl font-bold tabular-nums',
+  metric: 'font-display text-2xl font-bold tabular-nums',
+  metricSm: 'font-display text-lg font-semibold tabular-nums',
+  label: 'text-2xs font-semibold uppercase tracking-[0.08em]',
   mono: 'font-mono text-sm',
 }
 

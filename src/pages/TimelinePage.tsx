@@ -135,7 +135,7 @@ export function TimelinePage() {
     >
       <Card padding={false}>
         <div className="flex flex-wrap items-center gap-2 p-3">
-          <div className="flex items-center rounded-md bg-surface-sunken p-0.5 ring-1 ring-inset ring-line-subtle">
+          <div className="flex items-center rounded-full bg-surface-sunken p-1">
             <Button variant="ghost" size="sm" icon={<ChevronLeft size={14} />} onClick={() => shift(-1)} aria-label="Previous period" />
             <span className="min-w-[168px] px-1 text-center text-base font-medium tabular-nums">{rangeLabel}</span>
             <Button variant="ghost" size="sm" icon={<ChevronRight size={14} />} onClick={() => shift(1)} aria-label="Next period" />

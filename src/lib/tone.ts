@@ -109,7 +109,7 @@ export const taskStatusBar: Record<TaskStatus, { fill: string; text: string; edg
 /** One definition of what a utilization number means, used by every view. */
 export function utilizationTone(pct: number): MeterTone {
   if (pct >= 85) return 'danger'
-  if (pct < 30) return 'warning'
+  if (pct < 30) return 'accentSoft'
   return 'accent'
 }
 

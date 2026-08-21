@@ -91,7 +91,7 @@ export function Select({
           'shadow-xs ring-1 ring-inset ring-line transition-[box-shadow,background-color]',
           'hover:ring-line-strong focus-visible:ring-2 focus-visible:ring-accent',
           'disabled:cursor-not-allowed disabled:bg-surface-sunken disabled:text-fg-faint',
-          size === 'sm' ? 'h-7 px-2' : 'h-8 px-2.5',
+          size === 'sm' ? 'h-9 px-3' : 'h-10 px-3.5',
           open && 'ring-2 ring-accent',
           className ?? 'w-full',
         )}
@@ -121,7 +121,7 @@ export function Select({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Filter"
-                className="h-7 w-full rounded-sm bg-surface-sunken pl-7 pr-2 text-base text-fg placeholder:text-fg-faint focus:outline-none focus:ring-1 focus:ring-accent"
+                className="h-9 w-full rounded-lg bg-surface-sunken pl-8 pr-3 text-base text-fg placeholder:text-fg-faint focus:outline-none focus:ring-1 focus:ring-accent"
               />
             </div>
           </div>
@@ -157,7 +157,7 @@ export function Select({
                     close()
                   }}
                   className={cn(
-                    'flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-base transition-colors',
+                    'flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-base transition-colors',
                     isSelected ? 'bg-surface-selected text-fg' : 'text-fg hover:bg-surface-hover',
                   )}
                 >

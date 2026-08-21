@@ -1,10 +1,11 @@
 import { cn } from '@/lib/cn'
 import { Text } from './Text'
 
-export type MeterTone = 'accent' | 'success' | 'warning' | 'danger' | 'neutral'
+export type MeterTone = 'accent' | 'accentSoft' | 'success' | 'warning' | 'danger' | 'neutral'
 
 const barClass: Record<MeterTone, string> = {
   accent: 'bg-accent',
+  accentSoft: 'bg-accent/40',
   success: 'bg-success',
   warning: 'bg-warning',
   danger: 'bg-danger',
@@ -19,9 +20,19 @@ interface MeterProps {
   size?: 'sm' | 'md'
   className?: string
   label?: string
+  /** For meters drawn on a solid accent panel, where the tokens would vanish. */
+  inverted?: boolean
 }
 
-export function Meter({ value, tone = 'accent', showValue = false, size = 'md', className, label }: MeterProps) {
+export function Meter({
+  value,
+  tone = 'accent',
+  showValue = false,
+  size = 'md',
+  className,
+  label,
+  inverted = false,
+}: MeterProps) {
   const clamped = Math.min(100, Math.max(0, value))
   const bar = (
     <div
@@ -31,13 +42,17 @@ export function Meter({ value, tone = 'accent', showValue = false, size = 'md', 
       aria-valuemin={0}
       aria-valuemax={100}
       className={cn(
-        'w-full overflow-hidden rounded-full bg-surface-sunken ring-1 ring-inset ring-line-subtle',
-        size === 'sm' ? 'h-1' : 'h-1.5',
+        'w-full overflow-hidden rounded-full',
+        inverted ? 'bg-white/25' : 'bg-surface-sunken',
+        size === 'sm' ? 'h-1.5' : 'h-2.5',
         !showValue && className,
       )}
     >
       <div
-        className={cn('h-full rounded-full transition-[width] duration-300', barClass[tone])}
+        className={cn(
+          'h-full rounded-full transition-[width] duration-300',
+          inverted ? 'bg-white' : barClass[tone],
+        )}
         style={{ width: `${clamped}%` }}
       />
     </div>
@@ -70,7 +85,7 @@ export function StackedMeter({
 }) {
   const total = segments.reduce((s, seg) => s + seg.value, 0) || 1
   return (
-    <div className={cn('flex h-1.5 w-full overflow-hidden rounded-full bg-surface-sunken', className)}>
+    <div className={cn('flex h-2.5 w-full overflow-hidden rounded-full bg-surface-sunken', className)}>
       {segments.map((seg, i) =>
         seg.value > 0 ? (
           <div

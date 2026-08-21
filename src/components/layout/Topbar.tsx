@@ -1,11 +1,11 @@
-import { Fragment, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Bell, ChevronRight, Menu as MenuIcon, Moon, PanelLeft, Search, Sun } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { Bell, ChevronDown, Info, Menu as MenuIcon, Search, Zap } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { routes } from '@/lib/routes'
-import { useBreadcrumbs } from '@/lib/useBreadcrumbs'
 import { useAppStore } from '@/store/useAppStore'
 import { useUiStore } from '@/store/useUiStore'
+import { Avatar } from '@/components/ui/Avatar'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Popover } from '@/components/ui/Popover'
@@ -15,14 +15,19 @@ import { ALERT_TYPE_LABEL } from '@/components/alerts/AlertRow'
 import { alertSeverityTone } from '@/lib/tone'
 import { SCHEDULE_ORIGIN } from '@/engine'
 
+const NAV = [
+  { to: routes.dashboard(), label: 'Overview', end: true },
+  { to: routes.tasks(), label: 'Tasks' },
+  { to: routes.timeline(), label: 'Timeline' },
+  { to: routes.machines(), label: 'Machines' },
+  { to: routes.utilization(), label: 'Utilization' },
+  { to: routes.projects(), label: 'Projects' },
+  { to: routes.clients(), label: 'Clients' },
+]
+
 export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
-  const crumbs = useBreadcrumbs()
   const alerts = useAppStore((s) => s.alerts)
   const criticalCount = alerts.filter((a) => a.severity === 'critical').length
-  const collapsed = useUiStore((s) => s.sidebarCollapsed)
-  const toggleSidebar = useUiStore((s) => s.toggleSidebar)
-  const theme = useUiStore((s) => s.theme)
-  const toggleTheme = useUiStore((s) => s.toggleTheme)
   const setCommandOpen = useUiStore((s) => s.setCommandOpen)
 
   const bellRef = useRef<HTMLButtonElement>(null)
@@ -35,72 +40,52 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
     minute: '2-digit',
   })
 
+  const chip =
+    'flex h-10 w-10 items-center justify-center rounded-full text-fg-muted ring-1 ring-line transition-colors hover:bg-surface-hover hover:text-fg'
+
   return (
-    <header className="sticky top-0 z-header flex h-12 shrink-0 items-center gap-2 border-b border-line bg-app/85 px-3 backdrop-blur-md">
+    <header className="z-header flex h-[72px] shrink-0 items-center gap-3 border-b border-line bg-surface px-4 lg:px-5">
       <Button
         variant="ghost"
         size="sm"
-        icon={<MenuIcon size={16} />}
+        icon={<MenuIcon size={18} />}
         onClick={onOpenMobileNav}
         aria-label="Open navigation"
         className="md:hidden"
       />
-      {collapsed && (
-        <Button
-          variant="ghost"
-          size="sm"
-          icon={<PanelLeft size={15} />}
-          onClick={toggleSidebar}
-          aria-label="Expand sidebar"
-          className="hidden md:inline-flex"
-        />
-      )}
 
-      <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-1">
-        {crumbs.map((crumb, i) => (
-          <Fragment key={`${crumb.label}-${i}`}>
-            {i > 0 && <ChevronRight size={13} className="shrink-0 text-fg-faint" />}
-            {crumb.to && i < crumbs.length - 1 ? (
-              <Link
-                to={crumb.to}
-                className="shrink-0 rounded-xs px-1 py-0.5 text-base font-medium text-fg-muted transition-colors hover:bg-surface-hover hover:text-fg"
-              >
-                {crumb.label}
-              </Link>
-            ) : (
-              <span className="min-w-0 truncate px-1 py-0.5 text-base font-medium text-fg">{crumb.label}</span>
-            )}
-          </Fragment>
+      {/* Brand */}
+      <Link to={routes.dashboard()} className="flex shrink-0 items-center gap-2.5">
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent text-white">
+          <Zap size={18} fill="currentColor" strokeWidth={0} />
+        </span>
+        <span className="hidden font-display text-lg font-bold tracking-tight text-fg sm:block">Aadiushmaa</span>
+      </Link>
+
+      {/* Destination pills */}
+      <nav className="no-scrollbar mx-auto hidden items-center gap-1 overflow-x-auto lg:flex">
+        {NAV.map(({ to, label, end }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={end}
+            className={({ isActive }) =>
+              cn(
+                'flex h-9 shrink-0 items-center rounded-full px-4 text-base font-medium transition-colors',
+                isActive ? 'bg-ink text-white' : 'text-fg-muted hover:bg-surface-hover hover:text-fg',
+              )
+            }
+          >
+            {label}
+          </NavLink>
         ))}
       </nav>
 
-      <div className="ml-auto flex shrink-0 items-center gap-1">
-        <Tooltip content={`Plan computed ${planStamp}`}>
-          <span className="mr-1 hidden items-center gap-1.5 rounded-md bg-surface px-2 py-1 shadow-card lg:inline-flex">
-            <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-success" />
-            <Text variant="bodySm" tone="muted">
-              Plan live
-            </Text>
-          </span>
-        </Tooltip>
-
-        <Button
-          variant="ghost"
-          size="sm"
-          icon={<Search size={15} />}
-          onClick={() => setCommandOpen(true)}
-          aria-label="Search"
-          className="md:hidden"
-        />
-
-        <Tooltip content={theme === 'dark' ? 'Light theme' : 'Dark theme'}>
-          <Button
-            variant="ghost"
-            size="sm"
-            icon={theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-          />
+      <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0">
+        <Tooltip content="Search  ⌘K">
+          <button type="button" onClick={() => setCommandOpen(true)} aria-label="Search" className={chip}>
+            <Search size={17} />
+          </button>
         </Tooltip>
 
         <button
@@ -108,13 +93,28 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
           type="button"
           onClick={() => setBellOpen((v) => !v)}
           aria-label={`Alerts${criticalCount > 0 ? `, ${criticalCount} critical` : ''}`}
-          className="relative flex h-7 w-7 items-center justify-center rounded-md text-fg-muted transition-colors hover:bg-surface-hover hover:text-fg"
+          className={cn(chip, 'relative')}
         >
-          <Bell size={15} />
+          <Bell size={17} />
           {criticalCount > 0 && (
-            <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-danger ring-2 ring-app" />
+            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-accent ring-2 ring-surface" />
           )}
         </button>
+
+        <Tooltip content={`Plan computed ${planStamp}`}>
+          <span className={cn(chip, 'hidden xl:flex')}>
+            <Info size={17} />
+          </span>
+        </Tooltip>
+
+        <span className="ml-1 flex items-center gap-2.5 rounded-full py-1 pl-1 pr-2 ring-1 ring-line">
+          <Avatar name="Planning Desk" size="md" />
+          <span className="hidden min-w-0 leading-tight xl:block">
+            <span className="block truncate text-sm font-semibold text-fg">Planning desk</span>
+            <span className="block truncate text-xs text-fg-subtle">Production control</span>
+          </span>
+          <ChevronDown size={14} className="hidden shrink-0 text-fg-faint xl:block" />
+        </span>
       </div>
 
       <Popover
@@ -123,9 +123,9 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
         anchorRef={bellRef}
         placement="bottom-end"
         bare
-        className="w-[360px]"
+        className="w-[370px]"
       >
-        <div className="flex items-center justify-between border-b border-line px-3 py-2.5">
+        <div className="flex items-center justify-between border-b border-line px-4 py-3">
           <Text variant="headingSm">Exceptions</Text>
           <Badge tone={criticalCount > 0 ? 'danger' : 'success'}>
             {criticalCount > 0 ? `${criticalCount} critical` : 'All clear'}
@@ -133,14 +133,14 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
         </div>
         <div className="max-h-[320px] overflow-y-auto">
           {alerts.length === 0 && (
-            <div className="px-3 py-8 text-center">
+            <div className="px-4 py-8 text-center">
               <Text variant="bodySm" tone="subtle">
                 Nothing needs attention
               </Text>
             </div>
           )}
           {alerts.slice(0, 6).map((alert) => (
-            <div key={alert.id} className="flex gap-2.5 border-b border-line-subtle px-3 py-2.5 last:border-b-0">
+            <div key={alert.id} className="flex gap-2.5 border-b border-line-subtle px-4 py-3 last:border-b-0">
               <span
                 className={cn(
                   'mt-1 h-1.5 w-1.5 shrink-0 rounded-full',
@@ -166,7 +166,7 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
           <Link
             to={routes.alerts()}
             onClick={() => setBellOpen(false)}
-            className="flex h-7 items-center justify-center rounded-md text-base font-medium text-accent-fg transition-colors hover:bg-surface-hover"
+            className="flex h-9 items-center justify-center rounded-xl text-base font-semibold text-accent-fg transition-colors hover:bg-accent-soft"
           >
             View all exceptions
           </Link>

@@ -61,7 +61,7 @@ export function AlertRow({ alert, compact = false }: { alert: Alert; compact?: b
 
   const rail = <span className={cn('absolute inset-y-0 left-0 w-0.5', chrome.rail)} />
   const glyph = (
-    <span className={cn('flex h-6 w-6 shrink-0 items-center justify-center rounded-sm', chrome.icon)}>
+    <span className={cn('flex h-8 w-8 shrink-0 items-center justify-center rounded-xl', chrome.icon)}>
       <Icon size={13} strokeWidth={2.2} />
     </span>
   )
@@ -75,7 +75,7 @@ export function AlertRow({ alert, compact = false }: { alert: Alert; compact?: b
   // the badge instead of competing with it for horizontal space.
   if (compact) {
     return (
-      <div className="group relative border-b border-line-subtle px-3 py-2.5 pl-4 transition-colors last:border-b-0 hover:bg-surface-hover">
+      <div className="group relative border-b border-line-subtle px-5 py-3 transition-colors last:border-b-0 hover:bg-surface-hover">
         {rail}
         <div className="flex items-center gap-2">
           {glyph}
@@ -89,7 +89,7 @@ export function AlertRow({ alert, compact = false }: { alert: Alert; compact?: b
   }
 
   return (
-    <div className="group relative flex items-center gap-3 border-b border-line-subtle px-4 py-2.5 transition-colors last:border-b-0 hover:bg-surface-hover">
+    <div className="group relative flex items-center gap-3 border-b border-line-subtle px-5 py-3 transition-colors last:border-b-0 hover:bg-surface-hover">
       {rail}
       {glyph}
       {typeBadge}

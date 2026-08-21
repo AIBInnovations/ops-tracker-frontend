@@ -4,10 +4,20 @@ import { cn } from '@/lib/cn'
 import { Text } from './Text'
 import { Tooltip } from './Tooltip'
 
-export type SegmentTone = 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral'
+export type SegmentTone =
+  | 'accent'
+  | 'accentSoft'
+  | 'ink'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  | 'neutral'
 
 const fillClass: Record<SegmentTone, string> = {
   accent: 'bg-accent',
+  accentSoft: 'bg-accent-track',
+  ink: 'bg-ink',
   success: 'bg-success',
   warning: 'bg-warning',
   danger: 'bg-danger',
@@ -93,7 +103,7 @@ export function StatGroup({
   const legend = scale > 0 ? segments.filter((seg) => seg.value > 0) : segments
 
   return (
-    <div className={cn('flex flex-col rounded-lg bg-surface p-4 shadow-card', className)}>
+    <div className={cn('flex flex-col rounded-2xl bg-surface p-5 shadow-card', className)}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
           <Text variant="bodySm" tone="muted" truncate className="font-medium">
@@ -111,7 +121,7 @@ export function StatGroup({
         </div>
       </div>
 
-      <div className="relative mt-3 h-2 w-full overflow-hidden rounded-full bg-surface-sunken ring-1 ring-inset ring-line-subtle">
+      <div className="relative mt-4 h-2.5 w-full overflow-hidden rounded-full bg-surface-sunken">
         <div className="flex h-full w-full gap-0.5">
           {segments.map((seg) =>
             seg.value > 0 ? (
@@ -242,14 +252,14 @@ export function revenueSplit(
   if (profit >= 0) {
     return {
       segments: [
-        { label: 'Machine cost', value: cost, tone: 'warning', display: formatMoney(cost) },
-        { label: 'Profit', value: profit, tone: 'success', display: formatMoney(profit) },
+        { label: 'Machine cost', value: cost, tone: 'ink', display: formatMoney(cost) },
+        { label: 'Profit', value: profit, tone: 'accent', display: formatMoney(profit) },
       ],
     }
   }
 
   return {
-    segments: [{ label: 'Machine cost', value: cost, tone: 'warning', display: formatMoney(cost) }],
+    segments: [{ label: 'Machine cost', value: cost, tone: 'ink', display: formatMoney(cost) }],
     overrun: {
       label: 'Loss',
       value: cost - revenue,

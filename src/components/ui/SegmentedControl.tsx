@@ -27,7 +27,7 @@ export function SegmentedControl<T extends string>({
     <div
       role="tablist"
       className={cn(
-        'inline-flex shrink-0 items-center gap-0.5 rounded-md bg-surface-sunken p-0.5 ring-1 ring-inset ring-line-subtle',
+        'inline-flex shrink-0 items-center gap-0.5 rounded-full bg-surface-sunken p-1',
         className,
       )}
     >
@@ -42,11 +42,9 @@ export function SegmentedControl<T extends string>({
             aria-label={seg.ariaLabel}
             onClick={() => onChange(seg.value)}
             className={cn(
-              'inline-flex items-center justify-center gap-1.5 rounded-sm font-medium transition-all',
-              size === 'sm' ? 'h-6 px-2 text-xs' : 'h-7 px-2.5 text-sm',
-              active
-                ? 'bg-surface text-fg shadow-xs ring-1 ring-inset ring-line-subtle'
-                : 'text-fg-muted hover:text-fg',
+              'inline-flex items-center justify-center gap-1.5 rounded-full font-semibold transition-all',
+              size === 'sm' ? 'h-7 px-3 text-xs' : 'h-8 px-3.5 text-sm',
+              active ? 'bg-surface text-accent-fg shadow-sm' : 'text-fg-muted hover:text-fg',
             )}
           >
             {seg.label}

@@ -44,6 +44,12 @@ interface DataTableProps<T> {
   onSelectionChange?: (ids: Set<string>) => void
   /** Highlights a row without selecting it — the open drawer's subject. */
   activeId?: string
+  /**
+   * Fits the table to its container rather than scrolling sideways. Columns
+   * share the available width and long cells truncate. For panels that must
+   * not introduce a second scrollbar; full data views stay scrollable.
+   */
+  fluid?: boolean
   className?: string
 }
 
@@ -73,13 +79,14 @@ export function DataTable<T>({
   selectedIds,
   onSelectionChange,
   activeId,
+  fluid = false,
   className,
 }: DataTableProps<T>) {
   const navigate = useNavigate()
   const [sort, setSort] = useState<SortState | undefined>(defaultSort)
 
   const selectable = Boolean(onSelectionChange)
-  const cellPad = density === 'compact' ? 'px-3 py-1.5' : 'px-3 py-2.5'
+  const cellPad = density === 'compact' ? 'px-5 py-2.5' : 'px-5 py-3.5'
 
   const sorted = useMemo(() => {
     if (!sort) return rows
@@ -127,16 +134,18 @@ export function DataTable<T>({
 
   return (
     <div
-      className={cn('overflow-x-auto', className)}
+      className={cn(fluid ? 'overflow-x-hidden' : 'overflow-x-auto', className)}
       style={maxHeight ? { maxHeight, overflowY: 'auto' } : undefined}
     >
-      <table className="w-full min-w-max border-separate border-spacing-0">
+      <table
+        className={cn('w-full border-separate border-spacing-0', fluid ? 'table-fixed' : 'min-w-max')}
+      >
         <thead className="sticky top-0 z-sticky">
           <tr>
             {selectable && (
               <th
                 scope="col"
-                className="sticky left-0 z-10 w-9 border-b border-line bg-surface-sunken px-3 py-2"
+                className="sticky left-0 z-10 w-12 border-b border-line-subtle bg-surface-sunken px-5 py-3"
               >
                 <Checkbox checked={Boolean(allSelected)} indeterminate={someSelected} onChange={toggleAll} aria-label="Select all" />
               </th>
@@ -150,10 +159,11 @@ export function DataTable<T>({
                   scope="col"
                   style={{ width: col.width }}
                   className={cn(
-                    'whitespace-nowrap border-b border-line bg-surface-sunken px-3 py-2',
+                    'whitespace-nowrap border-b border-line-subtle bg-surface-sunken px-5 py-3',
+                    fluid && 'overflow-hidden text-ellipsis',
                     alignClass[col.align ?? 'start'],
                     col.hideBelow && hideClass[col.hideBelow],
-                    col.sticky && cn('md:sticky md:z-10', selectable ? 'md:left-9' : 'md:left-0'),
+                    col.sticky && cn('md:sticky md:z-10', selectable ? 'md:left-12' : 'md:left-0'),
                     col.sticky && i === 0 && 'md:shadow-[1px_0_0_0_rgb(var(--c-line))]',
                   )}
                 >
@@ -162,7 +172,7 @@ export function DataTable<T>({
                       type="button"
                       onClick={() => toggleSort(col.key)}
                       className={cn(
-                        'group inline-flex items-center gap-1 rounded-xs text-2xs font-semibold uppercase tracking-[0.06em] transition-colors',
+                        'group inline-flex items-center gap-1 rounded-xs text-2xs font-bold uppercase tracking-[0.08em] transition-colors',
                         isSorted ? 'text-fg' : 'text-fg-subtle hover:text-fg',
                         col.align === 'end' && 'flex-row-reverse',
                       )}
@@ -196,7 +206,7 @@ export function DataTable<T>({
         <tbody>
           {sorted.length === 0 && (
             <tr>
-              <td colSpan={columns.length + (selectable ? 1 : 0)} className="px-3 py-12 text-center">
+              <td colSpan={columns.length + (selectable ? 1 : 0)} className="px-5 py-14 text-center">
                 <Text variant="bodyMd" tone="subtle">
                   No records match the current filters
                 </Text>
@@ -225,8 +235,8 @@ export function DataTable<T>({
                 {selectable && (
                   <td
                     className={cn(
-                      'sticky left-0 z-10 w-9 border-b border-line-subtle px-3',
-                      density === 'compact' ? 'py-1.5' : 'py-2.5',
+                      'sticky left-0 z-10 w-12 border-b border-line-subtle px-5',
+                      density === 'compact' ? 'py-2.5' : 'py-3.5',
                       isActive ? 'bg-surface-selected' : isSelected ? 'bg-[rgb(var(--c-accent-soft))]' : 'bg-surface group-hover:bg-surface-hover',
                     )}
                   >
@@ -238,13 +248,14 @@ export function DataTable<T>({
                     key={col.key}
                     className={cn(
                       'whitespace-nowrap border-b border-line-subtle align-middle text-base',
+                      fluid && 'overflow-hidden text-ellipsis',
                       cellPad,
                       alignClass[col.align ?? 'start'],
                       col.hideBelow && hideClass[col.hideBelow],
                       col.sticky &&
                         cn(
                           'md:sticky md:z-10',
-                          selectable ? 'md:left-9' : 'md:left-0',
+                          selectable ? 'md:left-12' : 'md:left-0',
                           isActive
                             ? 'bg-surface-selected'
                             : isSelected
@@ -270,7 +281,7 @@ export function DataTable<T>({
                 <td
                   key={i}
                   className={cn(
-                    'whitespace-nowrap border-t border-line bg-surface-sunken px-3 py-2.5 text-base font-semibold',
+                    'whitespace-nowrap border-t border-line bg-surface-sunken px-5 py-3 text-base font-semibold',
                     alignClass[columns[i]?.align ?? 'start'],
                     columns[i]?.hideBelow && hideClass[columns[i].hideBelow!],
                   )}

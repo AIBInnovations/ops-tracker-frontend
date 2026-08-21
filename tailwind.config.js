@@ -8,12 +8,26 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      // Height-gated variant. The nav rail must fit its items on a laptop, so
+      // decorative blocks below the nav only appear on genuinely tall windows.
+      screens: {
+        tall: { raw: '(min-height: 900px)' },
+      },
       fontFamily: {
-        sans: ['Inter Variable', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        sans: ['Plus Jakarta Sans Variable', '-apple-system', 'Segoe UI', 'sans-serif'],
+        display: ['Poppins', 'Plus Jakarta Sans Variable', '-apple-system', 'Segoe UI', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
       colors: {
         app: c('app'),
+        ink: {
+          DEFAULT: c('ink'),
+          hover: c('ink-hover'),
+        },
+        pink: {
+          DEFAULT: c('brand-pink'),
+          soft: c('brand-pink-soft'),
+        },
         surface: {
           DEFAULT: c('surface'),
           raised: c('surface-raised'),
@@ -36,6 +50,7 @@ export default {
         },
         accent: {
           DEFAULT: c('accent'),
+          track: c('accent-track'),
           hover: c('accent-hover'),
           active: c('accent-active'),
           fg: c('accent-fg'),
@@ -76,25 +91,26 @@ export default {
         base: ['13px', { lineHeight: '20px' }],
         md: ['14px', { lineHeight: '20px' }],
         lg: ['15px', { lineHeight: '22px' }],
-        xl: ['18px', { lineHeight: '26px' }],
-        '2xl': ['22px', { lineHeight: '30px', letterSpacing: '-0.015em' }],
-        '3xl': ['28px', { lineHeight: '34px', letterSpacing: '-0.02em' }],
-        '4xl': ['34px', { lineHeight: '40px', letterSpacing: '-0.025em' }],
+        xl: ['19px', { lineHeight: '27px', letterSpacing: '-0.01em' }],
+        '2xl': ['24px', { lineHeight: '32px', letterSpacing: '-0.02em' }],
+        '3xl': ['30px', { lineHeight: '38px', letterSpacing: '-0.025em' }],
+        '4xl': ['38px', { lineHeight: '44px', letterSpacing: '-0.03em' }],
       },
       fontWeight: {
-        normal: '440',
-        medium: '510',
-        semibold: '570',
-        bold: '640',
+        normal: '450',
+        medium: '520',
+        semibold: '600',
+        bold: '700',
       },
       borderRadius: {
-        xs: '4px',
-        sm: '6px',
-        DEFAULT: '8px',
-        md: '8px',
-        lg: '10px',
-        xl: '14px',
-        '2xl': '18px',
+        xs: '6px',
+        sm: '9px',
+        DEFAULT: '12px',
+        md: '12px',
+        lg: '16px',
+        xl: '20px',
+        '2xl': '26px',
+        '3xl': '32px',
       },
       boxShadow: {
         xs: 'var(--shadow-xs)',
@@ -103,16 +119,27 @@ export default {
         lg: 'var(--shadow-lg)',
         xl: 'var(--shadow-xl)',
         ring: 'var(--shadow-ring)',
-        card: 'var(--shadow-ring), var(--shadow-xs)',
+        card: 'var(--shadow-card)',
+        // Not `accent` — that would collide with the `shadow-{color}` utility
+        // Tailwind derives from the colour palette.
+        glow: 'var(--shadow-accent)',
         popover: 'var(--shadow-ring), var(--shadow-lg)',
         modal: 'var(--shadow-ring), var(--shadow-xl)',
+      },
+      // Keys here must not collide with a `colors` key, or `bg-*` would emit
+      // both a background-color and a background-image under one class.
+      // Keys must not collide with a `colors` key, or `bg-*` would emit both a
+      // background-color and a background-image under one class.
+      backgroundImage: {
+        brand: 'var(--gradient-accent)',
+        'brand-deep': 'var(--gradient-accent-deep)',
       },
       spacing: {
         4.5: '18px',
         13: '52px',
         15: '60px',
         18: '72px',
-        58: '232px',
+        58: '236px',
         68: '272px',
       },
       zIndex: {

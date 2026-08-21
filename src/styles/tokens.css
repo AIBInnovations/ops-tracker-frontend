@@ -5,127 +5,162 @@
  * so a theme is a single block of overrides rather than a sweep through
  * component files. Values are space-separated RGB channels because Tailwind
  * composes them as `rgb(var(--x) / <alpha-value>)`.
+ *
+ * The palette is violet-on-blush: a pink canvas holds a white shell, the
+ * navigation rail carries the violet, and cards float on soft violet-tinted
+ * shadows rather than hairlines.
  */
 
 :root,
 [data-theme='light'] {
   color-scheme: light;
 
-  --c-app: 246 246 247;
+  /* Warm off-white canvas; cards are pure white with a hairline. */
+  --c-app: 241 240 237;
   --c-surface: 255 255 255;
   --c-surface-raised: 255 255 255;
-  --c-surface-sunken: 241 241 243;
-  --c-surface-hover: 246 246 247;
-  --c-surface-active: 237 237 240;
-  --c-surface-selected: 240 240 253;
+  --c-surface-sunken: 246 245 243;
+  --c-surface-hover: 247 246 244;
+  --c-surface-active: 239 238 235;
+  --c-surface-selected: 255 239 233;
 
-  --c-line: 226 226 230;
-  --c-line-subtle: 237 237 240;
-  --c-line-strong: 201 201 208;
+  --c-line: 233 231 227;
+  --c-line-subtle: 241 240 237;
+  --c-line-strong: 214 211 205;
 
-  --c-fg: 26 26 28;
-  --c-fg-muted: 92 95 98;
-  --c-fg-subtle: 127 130 136;
-  --c-fg-faint: 163 166 172;
+  --c-fg: 26 26 26;
+  --c-fg-muted: 113 111 106;
+  --c-fg-subtle: 140 138 132;
+  --c-fg-faint: 170 168 162;
   --c-fg-inverted: 255 255 255;
 
-  --c-accent: 88 82 216;
-  --c-accent-hover: 76 70 200;
-  --c-accent-active: 65 60 176;
-  --c-accent-fg: 72 66 200;
-  --c-accent-soft: 238 238 253;
-  --c-accent-soft-hover: 227 227 251;
-  --c-accent-border: 199 198 246;
+  /* Vermillion — the one saturated colour, used for emphasis surfaces,
+     the primary chart series and the brand mark. */
+  --c-accent: 244 85 30;
+  --c-accent-hover: 226 72 20;
+  --c-accent-active: 202 62 16;
+  --c-accent-fg: 214 68 20;
+  --c-accent-soft: 255 238 232;
+  --c-accent-soft-hover: 255 227 217;
+  --c-accent-border: 253 202 182;
   --c-on-accent: 255 255 255;
 
-  --c-success: 24 138 92;
-  --c-success-fg: 17 105 70;
-  --c-success-soft: 224 246 235;
-  --c-success-border: 176 226 203;
+  --c-accent-track: 255 226 214;
 
-  --c-warning: 191 133 0;
-  --c-warning-fg: 124 84 0;
-  --c-warning-soft: 253 240 214;
-  --c-warning-border: 244 215 150;
+  /* Near-black. Primary buttons and the dark feature cards. */
+  --c-ink: 24 24 24;
+  --c-ink-hover: 44 44 44;
 
-  --c-danger: 205 34 56;
-  --c-danger-fg: 168 22 42;
-  --c-danger-soft: 254 233 235;
-  --c-danger-border: 250 199 205;
+  --c-brand-pink: 244 85 30;
+  --c-brand-pink-soft: 255 238 232;
 
-  --c-info: 22 119 190;
-  --c-info-fg: 17 96 155;
-  --c-info-soft: 226 240 252;
-  --c-info-border: 183 216 245;
+  --c-success: 26 160 107;
+  --c-success-fg: 20 133 89;
+  --c-success-soft: 226 247 238;
+  --c-success-border: 170 228 205;
 
-  --shadow-xs: 0 1px 2px 0 rgb(18 18 23 / 0.05);
-  --shadow-sm: 0 1px 3px 0 rgb(18 18 23 / 0.07), 0 1px 2px -1px rgb(18 18 23 / 0.05);
-  --shadow-md: 0 4px 12px -2px rgb(18 18 23 / 0.1), 0 2px 4px -2px rgb(18 18 23 / 0.06);
-  --shadow-lg: 0 12px 32px -8px rgb(18 18 23 / 0.16), 0 4px 8px -4px rgb(18 18 23 / 0.08);
-  --shadow-xl: 0 24px 64px -12px rgb(18 18 23 / 0.24), 0 8px 16px -8px rgb(18 18 23 / 0.1);
-  --shadow-ring: 0 0 0 1px rgb(18 18 23 / 0.07);
+  --c-warning: 226 149 27;
+  --c-warning-fg: 168 106 8;
+  --c-warning-soft: 253 243 226;
+  --c-warning-border: 246 216 165;
 
-  --overlay: 18 18 23;
-  --overlay-opacity: 0.32;
+  --c-danger: 226 72 63;
+  --c-danger-fg: 201 52 45;
+  --c-danger-soft: 253 235 233;
+  --c-danger-border: 247 200 194;
+
+  --c-info: 42 122 226;
+  --c-info-fg: 30 100 196;
+  --c-info-soft: 232 240 253;
+  --c-info-border: 186 210 248;
+
+  --gradient-accent: linear-gradient(140deg, rgb(250 108 56) 0%, rgb(238 74 22) 100%);
+  --gradient-accent-deep: linear-gradient(150deg, rgb(238 74 22) 0%, rgb(190 50 10) 100%);
+  --gradient-pink: linear-gradient(140deg, rgb(250 108 56) 0%, rgb(238 74 22) 100%);
+
+  /* Flat, borderless cards read better here than lifted ones. */
+  --shadow-xs: 0 1px 2px 0 rgb(28 25 20 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(28 25 20 / 0.06), 0 1px 2px -1px rgb(28 25 20 / 0.04);
+  --shadow-md: 0 6px 16px -4px rgb(28 25 20 / 0.09), 0 2px 6px -2px rgb(28 25 20 / 0.05);
+  --shadow-lg: 0 16px 36px -10px rgb(28 25 20 / 0.13), 0 6px 12px -6px rgb(28 25 20 / 0.07);
+  --shadow-xl: 0 28px 64px -16px rgb(28 25 20 / 0.18), 0 10px 20px -10px rgb(28 25 20 / 0.09);
+  --shadow-ring: 0 0 0 1px rgb(28 25 20 / 0.06);
+  --shadow-card: 0 0 0 1px rgb(28 25 20 / 0.06);
+  --shadow-accent: 0 8px 20px -6px rgb(244 85 30 / 0.35);
+
+  --overlay: 24 22 18;
+  --overlay-opacity: 0.4;
 }
 
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --c-app: 9 9 11;
-  --c-surface: 17 17 20;
-  --c-surface-raised: 24 24 28;
-  --c-surface-sunken: 13 13 16;
-  --c-surface-hover: 26 26 31;
-  --c-surface-active: 33 33 39;
-  --c-surface-selected: 30 29 48;
+  --c-app: 18 18 17;
+  --c-surface: 28 28 27;
+  --c-surface-raised: 34 34 33;
+  --c-surface-sunken: 24 24 23;
+  --c-surface-hover: 38 38 36;
+  --c-surface-active: 46 46 44;
+  --c-surface-selected: 58 34 24;
 
-  --c-line: 38 38 45;
-  --c-line-subtle: 28 28 34;
-  --c-line-strong: 55 55 64;
+  --c-line: 48 48 46;
+  --c-line-subtle: 37 37 35;
+  --c-line-strong: 68 68 65;
 
-  --c-fg: 244 244 246;
-  --c-fg-muted: 158 158 170;
-  --c-fg-subtle: 122 122 134;
-  --c-fg-faint: 92 92 103;
-  --c-fg-inverted: 17 17 20;
+  --c-fg: 245 244 242;
+  --c-fg-muted: 166 163 157;
+  --c-fg-subtle: 136 133 127;
+  --c-fg-faint: 106 104 99;
+  --c-fg-inverted: 24 24 23;
 
-  --c-accent: 111 105 245;
-  --c-accent-hover: 126 121 250;
-  --c-accent-active: 96 90 232;
-  --c-accent-fg: 165 161 251;
-  --c-accent-soft: 32 30 62;
-  --c-accent-soft-hover: 41 38 76;
-  --c-accent-border: 62 58 112;
+  --c-accent: 250 106 54;
+  --c-accent-hover: 253 128 80;
+  --c-accent-active: 238 88 36;
+  --c-accent-fg: 253 146 104;
+  --c-accent-track: 72 42 30;
+  --c-ink: 18 18 18;
+  --c-ink-hover: 38 38 38;
+  --c-accent-soft: 62 34 24;
+  --c-accent-soft-hover: 78 42 28;
+  --c-accent-border: 104 56 36;
   --c-on-accent: 255 255 255;
 
-  --c-success: 46 178 122;
-  --c-success-fg: 106 216 168;
-  --c-success-soft: 18 46 36;
-  --c-success-border: 32 78 60;
+  --c-brand-pink: 247 163 161;
+  --c-brand-pink-soft: 72 42 48;
 
-  --c-warning: 224 165 40;
-  --c-warning-fg: 240 194 106;
-  --c-warning-soft: 52 39 12;
-  --c-warning-border: 88 66 22;
+  --c-success: 52 199 148;
+  --c-success-fg: 116 226 184;
+  --c-success-soft: 18 56 44;
+  --c-success-border: 32 90 71;
 
-  --c-danger: 235 82 100;
-  --c-danger-fg: 248 138 152;
-  --c-danger-soft: 56 21 27;
-  --c-danger-border: 92 35 44;
+  --c-warning: 240 176 74;
+  --c-warning-fg: 246 202 130;
+  --c-warning-soft: 60 44 18;
+  --c-warning-border: 98 72 28;
 
-  --c-info: 76 160 235;
-  --c-info-fg: 130 190 246;
-  --c-info-soft: 17 38 58;
-  --c-info-border: 30 65 98;
+  --c-danger: 244 116 134;
+  --c-danger-fg: 250 158 172;
+  --c-danger-soft: 64 26 36;
+  --c-danger-border: 102 42 56;
+
+  --c-info: 104 172 246;
+  --c-info-fg: 148 197 250;
+  --c-info-soft: 21 42 70;
+  --c-info-border: 36 72 114;
+
+  --gradient-accent: linear-gradient(140deg, rgb(252 122 72) 0%, rgb(238 88 36) 100%);
+  --gradient-accent-deep: linear-gradient(150deg, rgb(238 88 36) 0%, rgb(186 56 16) 100%);
+  --gradient-pink: linear-gradient(140deg, rgb(252 122 72) 0%, rgb(238 88 36) 100%);
 
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.55), 0 2px 4px -2px rgb(0 0 0 / 0.4);
-  --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.65), 0 4px 8px -4px rgb(0 0 0 / 0.45);
-  --shadow-xl: 0 24px 64px -12px rgb(0 0 0 / 0.75), 0 8px 16px -8px rgb(0 0 0 / 0.5);
+  --shadow-sm: 0 2px 6px -1px rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 8px 20px -4px rgb(0 0 0 / 0.55), 0 2px 6px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 18px 40px -10px rgb(0 0 0 / 0.65), 0 6px 12px -6px rgb(0 0 0 / 0.45);
+  --shadow-xl: 0 32px 70px -16px rgb(0 0 0 / 0.75), 0 10px 20px -10px rgb(0 0 0 / 0.5);
   --shadow-ring: 0 0 0 1px rgb(255 255 255 / 0.06);
+  --shadow-card: 0 0 0 1px rgb(255 255 255 / 0.05), 0 12px 28px -12px rgb(0 0 0 / 0.6);
+  --shadow-accent: 0 10px 24px -8px rgb(109 79 232 / 0.55);
 
-  --overlay: 0 0 0;
-  --overlay-opacity: 0.6;
+  --overlay: 8 6 18;
+  --overlay-opacity: 0.66;
 }

@@ -220,7 +220,6 @@ export function MachineFloorCard({
         rowKey={(r) => r.machine.id}
         rowHref={(r) => routes.machine(r.machineType.id, r.machine.id)}
         defaultSort={{ key: 'status', dir: 'asc' }}
-        maxHeight="440px"
         emptyState={<EmptyState icon={<Factory size={20} />} title="No units in this state" size="sm" />}
       />
     </Card>

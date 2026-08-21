@@ -5,7 +5,7 @@ import { cn } from '@/lib/cn'
 import { Text } from './Text'
 
 const itemBase =
-  'flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-base transition-colors ' +
+  'flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-base transition-colors ' +
   'disabled:pointer-events-none disabled:text-fg-faint'
 
 export function MenuLabel({ children }: { children: ReactNode }) {

@@ -73,7 +73,7 @@ export function AlertsPage() {
       title="Alerts and exceptions"
       subtitle="Deadline risk, overdue work, dependency blockages and profitability warnings — all derived live from the current plan."
     >
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <StatGroup
           label="By severity"
           total={alerts.length}

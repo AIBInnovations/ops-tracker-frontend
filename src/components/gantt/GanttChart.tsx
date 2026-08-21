@@ -135,7 +135,7 @@ export function GanttChart({
     })
 
   return (
-    <div className="relative overflow-auto rounded-lg bg-surface shadow-card" style={{ maxHeight: '70vh' }}>
+    <div className="relative overflow-auto rounded-2xl bg-surface shadow-card" style={{ maxHeight: '70vh' }}>
       <div style={{ width: LABEL_W + totalWidth, minWidth: '100%' }}>
         {/* Time axis */}
         <div className="sticky top-0 z-sticky flex bg-surface-sunken" style={{ height: HEADER_H }}>
@@ -194,7 +194,7 @@ export function GanttChart({
                 <button
                   type="button"
                   onClick={() => toggleGroup(mt.id)}
-                  className="sticky left-0 z-10 flex shrink-0 items-center gap-1.5 border-b border-r border-line bg-app px-2 transition-colors hover:bg-surface-hover"
+                  className="sticky left-0 z-10 flex shrink-0 items-center gap-1.5 border-b border-r border-line bg-surface-sunken px-2 transition-colors hover:bg-surface-hover"
                   style={{ width: LABEL_W }}
                 >
                   <ChevronDown
@@ -208,7 +208,7 @@ export function GanttChart({
                     {mt.machines.length}
                   </Text>
                 </button>
-                <div className="relative border-b border-line bg-app" style={{ width: totalWidth }}>
+                <div className="relative border-b border-line bg-surface-sunken" style={{ width: totalWidth }}>
                   <span className="absolute left-2 top-1/2 hidden -translate-y-1/2 sm:block">
                     <Text variant="bodySm" tone="faint" numeric>
                       {formatHours(typeHours)} queued · {formatCurrency(mt.hourlyRate)}/hr

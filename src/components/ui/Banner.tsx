@@ -24,7 +24,7 @@ interface BannerProps {
 export function Banner({ tone = 'info', title, children, action, onDismiss, className }: BannerProps) {
   const { wrap, icon: Icon, iconClass } = toneConfig[tone]
   return (
-    <div className={cn('rounded-lg p-3 ring-1 ring-inset', wrap, className)}>
+    <div className={cn('rounded-2xl p-4 ring-1 ring-inset', wrap, className)}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-start gap-2.5">
           <Icon size={16} strokeWidth={2.2} className={cn('mt-0.5 shrink-0', iconClass)} />
@@ -40,7 +40,7 @@ export function Banner({ tone = 'info', title, children, action, onDismiss, clas
               type="button"
               onClick={onDismiss}
               aria-label="Dismiss"
-              className="rounded-xs p-1 text-fg-subtle transition-colors hover:bg-black/5 hover:text-fg dark:hover:bg-white/10"
+              className="rounded-full p-1.5 text-fg-subtle transition-colors hover:bg-black/5 hover:text-fg dark:hover:bg-white/10"
             >
               <X size={14} />
             </button>

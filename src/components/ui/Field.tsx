@@ -54,7 +54,7 @@ export function Field({ label, children, hint, error, labelHidden = false, requi
 export const TextField = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement> & { prefix?: ReactNode; suffix?: ReactNode }>(
   function TextField({ className, prefix, suffix, ...props }, ref) {
     if (!prefix && !suffix) {
-      return <input ref={ref} {...props} className={cn(controlBase, 'h-8 px-2.5', className)} />
+      return <input ref={ref} {...props} className={cn(controlBase, 'h-10 px-3.5', className)} />
     }
     return (
       <span className="relative block">
@@ -66,7 +66,7 @@ export const TextField = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLIn
         <input
           ref={ref}
           {...props}
-          className={cn(controlBase, 'h-8', prefix ? 'pl-7' : 'pl-2.5', suffix ? 'pr-9' : 'pr-2.5', className)}
+          className={cn(controlBase, 'h-10', prefix ? 'pl-8' : 'pl-3.5', suffix ? 'pr-10' : 'pr-3.5', className)}
         />
         {suffix && (
           <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-sm text-fg-subtle">
@@ -96,14 +96,14 @@ export function SearchField({ value, onValueChange, className, ...props }: Searc
         {...props}
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
-        className={cn(controlBase, 'h-8 pl-8 pr-8')}
+        className={cn(controlBase, 'h-10 pl-9 pr-9')}
       />
       {value && (
         <button
           type="button"
           onClick={() => onValueChange('')}
           aria-label="Clear search"
-          className="absolute right-1.5 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-xs text-fg-subtle transition-colors hover:bg-surface-active hover:text-fg"
+          className="absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-fg-subtle transition-colors hover:bg-surface-active hover:text-fg"
         >
           <X size={12} />
         </button>

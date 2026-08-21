@@ -79,7 +79,7 @@ export function Drawer({
           'absolute flex flex-col bg-surface shadow-modal outline-none',
           side === 'right'
             ? cn('inset-y-0 right-0 animate-slide-right border-l border-line', rightWidth[size])
-            : cn('inset-x-0 bottom-0 animate-slide-up rounded-t-xl border-t border-line', bottomHeight[size]),
+            : cn('inset-x-0 bottom-0 animate-slide-up rounded-t-3xl border-t border-line', bottomHeight[size]),
           className,
         )}
       >

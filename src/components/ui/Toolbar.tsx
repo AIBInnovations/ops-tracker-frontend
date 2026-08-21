@@ -44,7 +44,7 @@ export function Toolbar({
 
   return (
     <>
-      <div className={cn('flex flex-wrap items-center gap-2 border-b border-line px-3 py-2.5', className)}>
+      <div className={cn('flex flex-wrap items-center gap-2.5 border-b border-line px-5 py-3.5', className)}>
         {onQueryChange && (
           <SearchField
             value={query ?? ''}
@@ -67,7 +67,7 @@ export function Toolbar({
             >
               Filters
               {activeFilterCount > 0 && (
-                <span className="ml-0.5 rounded-xs bg-accent-soft px-1 text-2xs font-semibold tabular-nums text-accent-fg">
+                <span className="ml-0.5 rounded-full bg-accent-soft px-1.5 py-0.5 text-2xs font-bold tabular-nums text-accent-fg">
                   {activeFilterCount}
                 </span>
               )}

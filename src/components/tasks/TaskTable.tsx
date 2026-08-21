@@ -94,6 +94,7 @@ function buildColumn(key: TaskColumnKey): Column<TaskRow> {
       return {
         key,
         header: 'Assigned',
+        width: '130px',
         sortValue: (r) => r.machineCode ?? '',
         render: (r) => (r.block ? <MachineLink id={r.block.machineId} /> : dash),
       }
@@ -138,6 +139,7 @@ function buildColumn(key: TaskColumnKey): Column<TaskRow> {
       return {
         key,
         header: 'Scheduled',
+        width: '310px',
         sortValue: (r) => (r.block ? new Date(r.block.startAt).getTime() : 0),
         render: (r) =>
           r.block ? (
@@ -174,6 +176,7 @@ function buildColumn(key: TaskColumnKey): Column<TaskRow> {
       return {
         key,
         header: 'Status',
+        width: '140px',
         sortValue: (r) => r.task.status,
         render: (r) => (
           <Badge tone={taskStatusTone[r.task.status]} dot pulse={r.task.status === 'in_progress'}>
@@ -195,6 +198,8 @@ interface TaskTableProps {
   onSelectionChange?: (ids: Set<string>) => void
   onRowClick?: (row: TaskRow) => void
   activeId?: string
+  /** Fit the container instead of scrolling sideways — see DataTable. */
+  fluid?: boolean
 }
 
 /** Shared by the bucket, project, client, and machine views. */
@@ -209,6 +214,7 @@ export function TaskTable({
   onSelectionChange,
   onRowClick,
   activeId,
+  fluid,
 }: TaskTableProps) {
   return (
     <DataTable
@@ -224,6 +230,7 @@ export function TaskTable({
       selectedIds={selectedIds}
       onSelectionChange={onSelectionChange}
       activeId={activeId}
+      fluid={fluid}
     />
   )
 }

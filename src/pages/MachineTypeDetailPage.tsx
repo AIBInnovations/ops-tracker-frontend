@@ -84,7 +84,7 @@ export function MachineTypeDetailPage() {
         </>
       }
     >
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-5 lg:grid-cols-5">
         <Metric label="Units" value={stats.totalMachines} helper={`${stats.runningNow} running now`} />
         <Metric
           label="Utilization (7d)"
@@ -104,7 +104,7 @@ export function MachineTypeDetailPage() {
 
       <Card>
         <CardHeader title="Units" subtitle="Each unit runs its own queue — the scheduler balances across them" />
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {units.map((unit) => {
             const unitQueue = machineQueue(taskRows, unit.machine.id)
             const unitHours = unitQueue.reduce((s, r) => s + (r.block?.durationHrs ?? 0), 0)

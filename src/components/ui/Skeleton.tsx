@@ -1,7 +1,7 @@
 import { cn } from '@/lib/cn'
 
 export function Skeleton({ className }: { className?: string }) {
-  return <div className={cn('skeleton animate-shimmer rounded-sm', className)} />
+  return <div className={cn('skeleton animate-shimmer rounded-lg', className)} />
 }
 
 /** Placeholder that keeps a table's shape while rows resolve. */

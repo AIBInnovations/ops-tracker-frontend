@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
-import { IconRail } from './IconRail'
+import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
 import { CommandPalette } from './CommandPalette'
 import { MobileNav } from './MobileNav'
@@ -24,7 +24,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="flex h-screen w-full flex-col overflow-hidden bg-app">
       <Topbar onOpenMobileNav={() => setNavOpenedAt(pathname)} />
       <div className="flex min-h-0 flex-1">
-        <IconRail />
+        <Sidebar />
         <main className="flex min-h-0 min-w-0 flex-1 flex-col">{children}</main>
       </div>
       <MobileNav open={mobileNavOpen} onClose={() => setNavOpenedAt(null)} />

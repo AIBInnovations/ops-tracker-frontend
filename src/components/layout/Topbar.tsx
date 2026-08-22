@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import { Bell, ChevronDown, Info, Menu as MenuIcon, Search, Zap } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Bell, ChevronDown, Info, Menu as MenuIcon, Moon, Search, Settings, Sun, Zap } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { routes } from '@/lib/routes'
 import { useAppStore } from '@/store/useAppStore'
@@ -8,6 +8,8 @@ import { useUiStore } from '@/store/useUiStore'
 import { Avatar } from '@/components/ui/Avatar'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { Kbd } from '@/components/ui/Kbd'
+import { MenuItem, MenuLabel, MenuList, MenuSeparator } from '@/components/ui/Menu'
 import { Popover } from '@/components/ui/Popover'
 import { Text } from '@/components/ui/Text'
 import { Tooltip } from '@/components/ui/Tooltip'
@@ -15,23 +17,20 @@ import { ALERT_TYPE_LABEL } from '@/components/alerts/AlertRow'
 import { alertSeverityTone } from '@/lib/tone'
 import { SCHEDULE_ORIGIN } from '@/engine'
 
-const NAV = [
-  { to: routes.dashboard(), label: 'Overview', end: true },
-  { to: routes.tasks(), label: 'Tasks' },
-  { to: routes.timeline(), label: 'Timeline' },
-  { to: routes.machines(), label: 'Machines' },
-  { to: routes.utilization(), label: 'Utilization' },
-  { to: routes.projects(), label: 'Projects' },
-  { to: routes.clients(), label: 'Clients' },
-]
 
 export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
   const alerts = useAppStore((s) => s.alerts)
   const criticalCount = alerts.filter((a) => a.severity === 'critical').length
   const setCommandOpen = useUiStore((s) => s.setCommandOpen)
+  const theme = useUiStore((s) => s.theme)
+  const toggleTheme = useUiStore((s) => s.toggleTheme)
 
   const bellRef = useRef<HTMLButtonElement>(null)
   const [bellOpen, setBellOpen] = useState(false)
+  const planRef = useRef<HTMLButtonElement>(null)
+  const [planOpen, setPlanOpen] = useState(false)
+  const accountRef = useRef<HTMLButtonElement>(null)
+  const [accountOpen, setAccountOpen] = useState(false)
 
   const planStamp = SCHEDULE_ORIGIN.toLocaleString('en-IN', {
     day: '2-digit',
@@ -62,26 +61,7 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
         <span className="hidden font-display text-lg font-bold tracking-tight text-fg sm:block">Aadiushmaa</span>
       </Link>
 
-      {/* Destination pills */}
-      <nav className="no-scrollbar mx-auto hidden items-center gap-1 overflow-x-auto lg:flex">
-        {NAV.map(({ to, label, end }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            className={({ isActive }) =>
-              cn(
-                'flex h-9 shrink-0 items-center rounded-full px-4 text-base font-medium transition-colors',
-                isActive ? 'bg-ink text-white' : 'text-fg-muted hover:bg-surface-hover hover:text-fg',
-              )
-            }
-          >
-            {label}
-          </NavLink>
-        ))}
-      </nav>
-
-      <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0">
+      <div className="ml-auto flex shrink-0 items-center gap-2">
         <Tooltip content="Search  ⌘K">
           <button type="button" onClick={() => setCommandOpen(true)} aria-label="Search" className={chip}>
             <Search size={17} />
@@ -101,20 +81,35 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
           )}
         </button>
 
-        <Tooltip content={`Plan computed ${planStamp}`}>
-          <span className={cn(chip, 'hidden xl:flex')}>
-            <Info size={17} />
-          </span>
-        </Tooltip>
+        <button
+          ref={planRef}
+          type="button"
+          onClick={() => setPlanOpen((v) => !v)}
+          aria-label="Plan status"
+          aria-expanded={planOpen}
+          className={cn(chip, 'hidden xl:flex')}
+        >
+          <Info size={17} />
+        </button>
 
-        <span className="ml-1 flex items-center gap-2.5 rounded-full py-1 pl-1 pr-2 ring-1 ring-line">
+        <button
+          ref={accountRef}
+          type="button"
+          onClick={() => setAccountOpen((v) => !v)}
+          aria-label="Account menu"
+          aria-expanded={accountOpen}
+          className="ml-1 flex items-center gap-2.5 rounded-full py-1 pl-1 pr-2 ring-1 ring-line transition-colors hover:bg-surface-hover"
+        >
           <Avatar name="Planning Desk" size="md" />
-          <span className="hidden min-w-0 leading-tight xl:block">
+          <span className="hidden min-w-0 text-left leading-tight xl:block">
             <span className="block truncate text-sm font-semibold text-fg">Planning desk</span>
             <span className="block truncate text-xs text-fg-subtle">Production control</span>
           </span>
-          <ChevronDown size={14} className="hidden shrink-0 text-fg-faint xl:block" />
-        </span>
+          <ChevronDown
+            size={14}
+            className={cn('hidden shrink-0 text-fg-faint transition-transform xl:block', accountOpen && 'rotate-180')}
+          />
+        </button>
       </div>
 
       <Popover
@@ -171,6 +166,61 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
             View all exceptions
           </Link>
         </div>
+      </Popover>
+
+      <Popover open={planOpen} onClose={() => setPlanOpen(false)} anchorRef={planRef} placement="bottom-end" bare>
+        <div className="w-[280px] p-4">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-success" />
+            <Text variant="headingSm">Plan is live</Text>
+          </div>
+          <Text variant="bodySm" tone="muted" className="mt-2 block">
+            The schedule is recomputed from the task bucket on every change — no
+            queue, no overnight batch.
+          </Text>
+          <div className="mt-3 border-t border-line-subtle pt-3">
+            <Text variant="bodySm" tone="subtle">
+              Last computed
+            </Text>
+            <Text variant="bodyMd" numeric className="mt-0.5 block font-semibold">
+              {planStamp}
+            </Text>
+          </div>
+        </div>
+      </Popover>
+
+      <Popover
+        open={accountOpen}
+        onClose={() => setAccountOpen(false)}
+        anchorRef={accountRef}
+        placement="bottom-end"
+      >
+        <MenuList>
+          <MenuLabel>Aadiushmaa Engineers</MenuLabel>
+          <MenuItem
+            icon={theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+            onClick={() => {
+              toggleTheme()
+              setAccountOpen(false)
+            }}
+          >
+            {theme === 'dark' ? 'Light theme' : 'Dark theme'}
+          </MenuItem>
+          <MenuItem
+            icon={<Search size={14} />}
+            suffix={<Kbd>⌘K</Kbd>}
+            onClick={() => {
+              setAccountOpen(false)
+              setCommandOpen(true)
+            }}
+          >
+            Command menu
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem icon={<Settings size={14} />} onClick={() => setAccountOpen(false)}>
+            Preferences
+          </MenuItem>
+        </MenuList>
       </Popover>
     </header>
   )

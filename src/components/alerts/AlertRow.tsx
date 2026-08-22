@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { AlertTriangle, ArrowRight, Clock, GitBranch, PauseCircle, TrendingDown, Wrench } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { Badge } from '@/components/ui/Badge'
@@ -72,10 +73,12 @@ export function AlertRow({ alert, compact = false }: { alert: Alert; compact?: b
   )
 
   // The dashboard rail is a narrow column, so there the message wraps under
-  // the badge instead of competing with it for horizontal space.
+  // the badge instead of competing with it for horizontal space. There is no
+  // room for a trailing action either, so the whole row carries the link —
+  // otherwise the hover highlight would promise a click that does nothing.
   if (compact) {
-    return (
-      <div className="group relative border-b border-line-subtle px-5 py-3 transition-colors last:border-b-0 hover:bg-surface-hover">
+    const body = (
+      <>
         {rail}
         <div className="flex items-center gap-2">
           {glyph}
@@ -84,12 +87,25 @@ export function AlertRow({ alert, compact = false }: { alert: Alert; compact?: b
         <Text variant="bodySm" tone="muted" className="mt-1.5 block">
           {alert.message}
         </Text>
-      </div>
+      </>
+    )
+    const base = 'group relative block border-b border-line-subtle px-5 py-3 transition-colors last:border-b-0'
+    return target ? (
+      <Link to={target.to} className={cn(base, 'hover:bg-surface-hover')}>
+        {body}
+      </Link>
+    ) : (
+      <div className={base}>{body}</div>
     )
   }
 
   return (
-    <div className="group relative flex items-center gap-3 border-b border-line-subtle px-5 py-3 transition-colors last:border-b-0 hover:bg-surface-hover">
+    <div
+      className={cn(
+        'group relative flex items-center gap-3 border-b border-line-subtle px-5 py-3 transition-colors last:border-b-0',
+        target && 'hover:bg-surface-hover',
+      )}
+    >
       {rail}
       {glyph}
       {typeBadge}
